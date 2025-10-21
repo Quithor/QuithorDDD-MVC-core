@@ -30,4 +30,28 @@ public class DomainServiceImpl<DOMAIN extends DomainModel> implements DomainServ
         log.debug("page {} and save to database", JSON.toJSONString(domain));
         return repository.page(page, domain);
     }
+    
+    @Override
+    public Long count(DOMAIN domain) {
+        log.debug("query param: {}", JSON.toJSONString(domain));
+        return repository.count(domain);
+    }
+    
+    @Override
+    public DOMAIN update(DOMAIN domain) {
+        log.debug("update {} and save to database", JSON.toJSONString(domain));
+        return repository.update(domain);
+    }
+    
+    @Override
+    public DOMAIN delete(DOMAIN domain) {
+        log.debug("delete {} and save to database", JSON.toJSONString(domain));
+        return repository.delete(domain);
+    }
+    
+    @Override
+    public DOMAIN getById(long id) {
+        log.debug("get {} by id", id);
+        return repository.getById(id);
+    }
 }

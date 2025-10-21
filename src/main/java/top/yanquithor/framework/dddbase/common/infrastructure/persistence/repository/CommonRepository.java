@@ -2,6 +2,7 @@ package top.yanquithor.framework.dddbase.common.infrastructure.persistence.repos
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import top.yanquithor.framework.dddbase.common.domain.model.DomainModel;
 import top.yanquithor.framework.dddbase.common.domain.repository.BaseRepository;
@@ -48,5 +49,48 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends DomainModel, M e
         return list.stream()
                 .map(converter::toDomain)
                 .toList();
+    }
+    
+    @Override
+    public Long count(DOMAIN domain) {
+        if (domain == null) {
+            log.debug("count all");
+            return mapper.selectCount(new LambdaQueryWrapper<DO>());
+        } else {
+            log.debug("count query: {}", JSON.toJSONString(domain));
+            return mapper.selectCount(new LambdaQueryWrapper<DO>()
+                    .setEntity(converter.toDO(domain)));
+        }
+    }
+    
+    @Override
+    public DOMAIN update(DOMAIN domain) {
+        if (domain != null) {
+            LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
+            wrapper.setEntity(converter.toDO(domain));
+            wrapper.eq(DO::getId, domain.getId());
+            mapper.update(wrapper);
+        } else {
+            throw new RuntimeException("domain is null");
+        }
+        return domain;
+    }
+    
+    @Override
+    public DOMAIN delete(DOMAIN domain) {
+        if (domain != null) {
+            LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
+            wrapper.set(DO::getStatus, "deleted");
+            wrapper.eq(DO::getId, domain.getId());
+            mapper.update(wrapper);
+        } else {
+            throw new RuntimeException("domain is null");
+        }
+        return domain;
+    }
+    
+    @Override
+    public DOMAIN getById(long id) {
+        return converter.toDomain(mapper.selectById(id));
     }
 }
