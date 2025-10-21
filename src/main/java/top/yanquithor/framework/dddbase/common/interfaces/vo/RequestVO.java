@@ -8,4 +8,8 @@ import lombok.Setter;
 public abstract class RequestVO<DOMAIN> extends BaseVO {
     
     public abstract DOMAIN toDomain();
+    
+    public boolean verify() {
+        return true;
+    }
 }
