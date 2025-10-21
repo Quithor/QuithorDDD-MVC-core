@@ -4,6 +4,10 @@ public interface JobHandler {
     
     String execute(String param);
     
+    String getCron();
+    
+    boolean active();
+    
     default String getName() {
         return getClass().getSimpleName();
     }

@@ -1,5 +1,6 @@
 package top.yanquithor.framework.dddbase.common.infrastructure.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ResourceLoaderAware;
@@ -13,6 +14,7 @@ import top.yanquithor.framework.dddbase.common.domain.interfaces.JobHandler;
 import java.beans.Introspector;
 import java.lang.reflect.Modifier;
 
+@Slf4j
 public class JobHandlerRegistrar implements ImportBeanDefinitionRegistrar, ResourceLoaderAware {
 
     private ResourceLoader resourceLoader;
@@ -45,6 +47,13 @@ public class JobHandlerRegistrar implements ImportBeanDefinitionRegistrar, Resou
                     continue;
                 }
 
+                // 检查是否可以通过无参构造函数实例化并调用 active() 方法
+                Object instance = clazz.getDeclaredConstructor().newInstance();
+                if (instance instanceof JobHandler && !((JobHandler) instance).active()) {
+                    System.out.println("Skipped inactive JobHandler: " + className);
+                    continue;
+                }
+
                 // 自动生成 beanName（首字母小写）
                 String beanName = buildBeanName(className);
 
@@ -53,8 +62,8 @@ public class JobHandlerRegistrar implements ImportBeanDefinitionRegistrar, Resou
                     registry.registerBeanDefinition(beanName, bd);
                     System.out.println("Registered JobHandler: " + className);
                 }
-            } catch (ClassNotFoundException e) {
-                System.err.println("Class not found: " + className);
+            } catch (Exception e) {
+                log.error("Error registering JobHandler: {}", className, e);
             }
         }
     }
