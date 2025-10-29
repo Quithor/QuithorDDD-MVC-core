@@ -5,7 +5,21 @@ import top.yanquithor.framework.dddbase.common.infrastructure.persistence.dataob
 
 public interface BaseConverter<DO extends BaseDO, DOMAIN extends DomainModel> {
     
-    DO toDO(DOMAIN domain);
+    default DO toDO(DOMAIN domain) {
+        return (DO) DO.builder()
+                .id(domain.getId())
+                .createTime(domain.getCreateTime())
+                .updateTime(domain.getUpdateTime())
+                .status(domain.getStatus())
+                .build();
+    }
     
-    DOMAIN toDomain(DO doo);
+    default DOMAIN toDomain(DO doo) {
+        return (DOMAIN) DOMAIN.builder()
+                .id(doo.getId())
+                .createTime(doo.getCreateTime())
+                .updateTime(doo.getUpdateTime())
+                .status(doo.getStatus())
+                .build();
+    }
 }
