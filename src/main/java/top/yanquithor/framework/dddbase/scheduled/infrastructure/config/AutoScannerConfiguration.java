@@ -1,4 +1,4 @@
-package top.yanquithor.framework.dddbase.common.infrastructure.config;
+package top.yanquithor.framework.dddbase.scheduled.infrastructure.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

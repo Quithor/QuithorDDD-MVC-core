@@ -1,7 +1,7 @@
-package top.yanquithor.framework.dddbase.common.infrastructure.anno;
+package top.yanquithor.framework.dddbase.scheduled.infrastructure.anno;
 
 import org.springframework.context.annotation.Import;
-import top.yanquithor.framework.dddbase.common.infrastructure.config.JobHandlerRegistrar;
+import top.yanquithor.framework.dddbase.scheduled.infrastructure.config.JobHandlerRegistrar;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
