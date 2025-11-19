@@ -1,14 +1,9 @@
 package top.yanquithor.framework.dddbase.common.domain.repository;
 
-import top.yanquithor.framework.dddbase.common.domain.model.DomainModel;
-import top.yanquithor.framework.dddbase.common.interfaces.vo.PageRequestVO;
+import top.yanquithor.framework.dddbase.common.domain.model.Aggregate;
 
-import java.util.List;
-
-public interface BaseRepository <DOMAIN extends DomainModel> {
+public interface BaseRepository <DOMAIN extends Aggregate> {
     DOMAIN save(DOMAIN domain);
-    
-    List<DOMAIN> page(PageRequestVO page, DOMAIN domain);
     
     Long count(DOMAIN domain);
     

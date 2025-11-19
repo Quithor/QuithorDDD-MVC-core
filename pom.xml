@@ -11,7 +11,7 @@
 
 	<groupId>top.yanquithor.framework</groupId>
 	<artifactId>ddd-base</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>ddd-base</name>
 	<description>ddd-base</description>
 
