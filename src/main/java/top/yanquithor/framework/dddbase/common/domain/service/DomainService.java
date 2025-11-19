@@ -1,15 +1,10 @@
 package top.yanquithor.framework.dddbase.common.domain.service;
 
-import top.yanquithor.framework.dddbase.common.domain.model.DomainModel;
-import top.yanquithor.framework.dddbase.common.interfaces.vo.PageRequestVO;
+import top.yanquithor.framework.dddbase.common.domain.model.Aggregate;
 
-import java.util.List;
-
-public interface DomainService<DOMAIN extends DomainModel> {
+public interface DomainService<DOMAIN extends Aggregate> {
     
     DOMAIN create(DOMAIN domain);
-    
-    <P extends PageRequestVO> List<DOMAIN> page(P page, DOMAIN domain);
     
     Long count(DOMAIN domain);
     
