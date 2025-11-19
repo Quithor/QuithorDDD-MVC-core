@@ -4,18 +4,17 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
-import top.yanquithor.framework.dddbase.common.domain.model.DomainModel;
+import top.yanquithor.framework.dddbase.common.domain.model.Aggregate;
 import top.yanquithor.framework.dddbase.common.domain.repository.BaseRepository;
 import top.yanquithor.framework.dddbase.common.infrastructure.converter.BaseConverter;
 import top.yanquithor.framework.dddbase.common.infrastructure.persistence.dataobject.BaseDO;
 import top.yanquithor.framework.dddbase.common.infrastructure.persistence.mapper.BaseMapperX;
-import top.yanquithor.framework.dddbase.common.interfaces.vo.PageRequestVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
 @Slf4j
-public class CommonRepository<DO extends BaseDO, DOMAIN extends DomainModel, M extends BaseMapperX<DO>> implements BaseRepository<DOMAIN> {
+public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M extends BaseMapperX<DO>> implements BaseRepository<DOMAIN> {
     
     protected final BaseConverter<DO, DOMAIN> converter;
     protected final M mapper;
@@ -39,19 +38,6 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends DomainModel, M e
     }
     
     @Override
-    public List<DOMAIN> page(PageRequestVO page, DOMAIN domain) {
-        log.debug("page size: {}, page num: {}, query: {}", page.getPageSize(), page.getPageNum(), JSON.toJSONString(domain));
-        Page<DO> queryPage = Page.of(page.getPageNum(), page.getPageSize());
-        LambdaQueryWrapper<DO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.setEntity(converter.toDO(domain));
-        List<DO> list = mapper.selectList(queryPage, wrapper);
-        log.debug("select {} records from database", list.size());
-        return list.stream()
-                .map(converter::toDomain)
-                .toList();
-    }
-    
-    @Override
     public Long count(DOMAIN domain) {
         if (domain == null) {
             log.debug("count all");
@@ -68,7 +54,6 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends DomainModel, M e
         if (domain != null) {
             LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
             wrapper.setEntity(converter.toDO(domain));
-            wrapper.eq(DO::getId, domain.getId());
             mapper.update(wrapper);
         } else {
             throw new RuntimeException("domain is null");
@@ -81,7 +66,6 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends DomainModel, M e
         if (domain != null) {
             LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
             wrapper.set(DO::getStatus, "deleted");
-            wrapper.eq(DO::getId, domain.getId());
             mapper.update(wrapper);
         } else {
             throw new RuntimeException("domain is null");

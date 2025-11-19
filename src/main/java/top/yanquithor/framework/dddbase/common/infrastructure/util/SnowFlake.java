@@ -21,7 +21,7 @@ public class SnowFlake {
     private static final long MAX_WORKER_ID = ~(-1L << WORKER_ID_BITS); // Maximum worker ID
     private static final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BITS); // Maximum sequence number
     private static final long WORKER_ID_SHIFT = SEQUENCE_BITS; // Worker ID left shift bits
-    private static final long TIMESTAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS; // Timestamp left shift bits
+    private static final long TIMESTAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS; // TimestampTZ left shift bits
     
     private final long workerId; // Current worker ID
     private final AtomicLong sequence = new AtomicLong(0L); // Sequence number
