@@ -1,8 +1,8 @@
 package top.yanquithor.framework.dddbase.common.infrastructure.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.prompt.PromptTemplate;
+//import org.springframework.ai.chat.client.ChatClient;
+//import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.scheduling.support.CronExpression;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +22,11 @@ public final class CronUtil {
     
     private static final List<String> CRON_MONTH = List.of("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
     private static final List<String> CRON_DAY_OF_WEEK = List.of("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT");
-    private final ChatClient client;
+//    private final ChatClient client;
     
-    public CronUtil(ChatClient client) {
-        this.client = client;
-    }
+//    public CronUtil(ChatClient client) {
+//        this.client = client;
+//    }
     
     /**
      * Verifies a cron expression by checking each component field against cron syntax rules.
@@ -256,7 +256,7 @@ public final class CronUtil {
         return false;
     }
     
-    /**
+    /*
      * Converts a cron expression to natural language description using AI.
      * Uses Spring AI to generate human-readable descriptions of cron expressions.
      *
@@ -264,18 +264,18 @@ public final class CronUtil {
      * @param language Target language for the description
      * @return Natural language description of the cron expression
      */
-    public String preseasonToNatureLanguage(String cron, String language) {
-        PromptTemplate userPrompt = new PromptTemplate("""
-                现在有一个Cron表达式 {cron} （Spring支持的语法版本）
-                用户和想要知道这个表达式的含义，尽量使用通俗易懂的语言解析出cron的含义
-                仅输出表达式所表述的执行内容，不需要额外输出""");
-        userPrompt.add("cron", cron);
-        PromptTemplate systemPrompt = new PromptTemplate("""
-                用户想要的输出语言为： {language}""");
-        systemPrompt.add("language", language);
-        return client.prompt(userPrompt.create())
-                .system(systemPrompt.create().getContents())
-                .call()
-                .content();
-    }
+//    public String preseasonToNatureLanguage(String cron, String language) {
+//        PromptTemplate userPrompt = new PromptTemplate("""
+//                现在有一个Cron表达式 {cron} （Spring支持的语法版本）
+//                用户和想要知道这个表达式的含义，尽量使用通俗易懂的语言解析出cron的含义
+//                仅输出表达式所表述的执行内容，不需要额外输出""");
+//        userPrompt.add("cron", cron);
+//        PromptTemplate systemPrompt = new PromptTemplate("""
+//                用户想要的输出语言为： {language}""");
+//        systemPrompt.add("language", language);
+//        return client.prompt(userPrompt.create())
+//                .system(systemPrompt.create().getContents())
+//                .call()
+//                .content();
+//    }
 }
