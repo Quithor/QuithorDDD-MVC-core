@@ -1,0 +1,11 @@
+@startuml
+node 阿里云控制台 as al
+node 服务器 as ser
+note right of ser
+域名解析到的那个
+Debian
+end note
+
+al --> ser : curl 获取ssl
+
+@enduml
