@@ -27,6 +27,10 @@ This framework can be built into a Maven dependency that allows for quick implem
 - **Scheduled Task Plugin**: Task scheduling extension
 - **DLC Modules**: Additional feature extensions using the framework
 
+## 📊 GitHub Stats
+
+![Stats](https://repobeats.axiom.co/api/embed/99748026fe04cecc93faf8a1a33262bf26026386.svg "Repobeats analytics image")
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=1193604497%2FQuithorDDD-MVC-core&type=Date)](https://star-history.com/#1193604497/QuithorDDD-MVC-core&Date)

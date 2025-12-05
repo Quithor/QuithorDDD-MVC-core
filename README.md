@@ -27,6 +27,10 @@
 - AI插件：智能功能扩展模块
 - 定时任务插件：任务调度功能模块
 
+## 📊 GitHub Stats
+
+![Stats](https://repobeats.axiom.co/api/embed/99748026fe04cecc93faf8a1a33262bf26026386.svg "Repobeats analytics image")
+
 ## ⭐️ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Quithor/QuithorDDD-MVC-core&type=date&legend=top-left)](https://www.star-history.com/#Quithor/QuithorDDD-MVC-core&type=date&legend=top-left)
