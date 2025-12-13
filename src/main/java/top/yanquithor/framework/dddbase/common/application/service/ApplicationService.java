@@ -10,7 +10,7 @@ public abstract class ApplicationService<DOMAIN extends Aggregate, DS extends Do
 
     private final DomainService<DOMAIN> domainService;
     
-    private ApplicationService(DS domainService) {
+    protected ApplicationService(DS domainService) {
         this.domainService = domainService;
     }
     
