@@ -10,10 +10,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Distributed ID Generator - Implements Snowflake Algorithm
+ *
+ * @author YanQuithor
+ * @version 1.1.1
+ * @since 2025-12-13
+ */
 @Slf4j
 @Component
 public class SnowFlake {
-    
+
     // Define constants
     private static final long EPOCH = LocalDateTime.of(2025, 1, 1, 0, 0, 0).toInstant(ZoneOffset.UTC).toEpochMilli();
     private static final int WORKER_ID_BITS = 5; // Worker ID bits
@@ -22,11 +29,11 @@ public class SnowFlake {
     private static final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BITS); // Maximum sequence number
     private static final long WORKER_ID_SHIFT = SEQUENCE_BITS; // Worker ID left shift bits
     private static final long TIMESTAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS; // TimestampTZ left shift bits
-    
+
     private final long workerId; // Current worker ID
     private final AtomicLong sequence = new AtomicLong(0L); // Sequence number
     private long lastTimestamp = -1L; // Last timestamp when ID was generated
-    
+
     @Autowired
     public SnowFlake(Environment environment,
                      @Value("${snowflake.worker-id:0}") int defaultWorkerId) {
@@ -39,12 +46,13 @@ public class SnowFlake {
         }
         log.info("Snowflake Worker Id: {}", this.workerId);
     }
-    
+
     public SnowFlake() {this.workerId = 1;}
-    
+
     public synchronized long nextId() {
+        // 生成下一个ID
         long timestamp = timeGen();
-        
+
         // If current time is less than the last timestamp when ID was generated,
         // it means the system clock has been set back
         if (timestamp < lastTimestamp) {
@@ -52,7 +60,7 @@ public class SnowFlake {
                     "Clock moved backwards. Refusing to generate id for %d milliseconds",
                     lastTimestamp - timestamp));
         }
-        
+
         // If multiple IDs are generated within the same millisecond,
         // resolve conflicts through sequence numbers
         if (lastTimestamp == timestamp) {
@@ -63,19 +71,21 @@ public class SnowFlake {
         } else {
             sequence.set(0L); // Reset sequence number in new millisecond
         }
-        
+
         lastTimestamp = timestamp;
-        
+
         return ((timestamp - EPOCH) << TIMESTAMP_LEFT_SHIFT) |
                 (workerId << WORKER_ID_SHIFT) |
                 (sequence.get() & MAX_SEQUENCE);
     }
-    
+
     private long timeGen() {
+        // 获取当前时间戳
         return System.currentTimeMillis();
     }
-    
+
     private long tilNextMillis(long lastTimestamp) {
+        // 等待下一毫秒
         long timestamp = timeGen();
         while (timestamp <= lastTimestamp) {
             timestamp = timeGen();

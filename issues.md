@@ -14,6 +14,9 @@
 **影响**: 无法在聚合之间进行松耦合的通信，违背了DDD原则。
 **修复方案**: 实现领域事件发布者/订阅者的基础接口和机制。
 
+> 已完成
+> 已创建 DomainEvent 接口、EventPublisher 接口、EventHandler 接口、SimpleEventPublisher 实现类、更新了 Aggregate 接口和创建了 AbstractAggregate 抽象类
+
 ### 3. 领域异常层次结构缺失
 **问题**: 框架没有领域特定的异常类型或适当的错误处理机制。
 **影响**: 无法区分不同类型的领域错误，导致错误处理混乱。

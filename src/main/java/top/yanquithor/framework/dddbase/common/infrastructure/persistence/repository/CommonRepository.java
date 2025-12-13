@@ -13,19 +13,27 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
+/**
+ * Common Repository Implementation
+ *
+ * @author YanQuithor
+ * @version 1.1.1
+ * @since 2025-12-13
+ */
 @Slf4j
 public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M extends BaseMapperX<DO>> implements BaseRepository<DOMAIN> {
-    
+
     protected final BaseConverter<DO, DOMAIN> converter;
     protected final M mapper;
-    
+
     protected CommonRepository(BaseConverter<DO, DOMAIN> converter, M mapper) {
         this.converter = converter;
         this.mapper = mapper;
     }
-    
+
     @Override
     public DOMAIN save(DOMAIN domain) {
+        // 将领域对象转换为数据对象并保存到数据库
         DO aDo = converter.toDO(domain);
         int i = mapper.insert(aDo);
         if (i < 1) {
@@ -36,9 +44,10 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
         log.debug("insert {} to database", JSON.toJSONString(aDo));
         return converter.toDomain(aDo);
     }
-    
+
     @Override
     public Long count(DOMAIN domain) {
+        // 计算领域对象的数量
         if (domain == null) {
             log.debug("count all");
             return mapper.selectCount(new LambdaQueryWrapper<DO>());
@@ -48,9 +57,10 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
                     .setEntity(converter.toDO(domain)));
         }
     }
-    
+
     @Override
     public DOMAIN update(DOMAIN domain) {
+        // 更新领域对象
         if (domain != null) {
             LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
             wrapper.setEntity(converter.toDO(domain));
@@ -60,9 +70,10 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
         }
         return domain;
     }
-    
+
     @Override
     public DOMAIN delete(DOMAIN domain) {
+        // 删除领域对象（标记为'已删除'）
         if (domain != null) {
             LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
             wrapper.set(DO::getStatus, "deleted");
@@ -72,9 +83,10 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
         }
         return domain;
     }
-    
+
     @Override
     public DOMAIN getById(long id) {
+        // 根据ID获取领域对象
         return converter.toDomain(mapper.selectById(id));
     }
 }
