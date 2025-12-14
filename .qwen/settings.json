@@ -1,0 +1,40 @@
+{
+  "logging": {
+    "enable": true,
+    "logLevel": "info",
+    "logDirectory": ".qwen/logs",
+    "maxLogFiles": 10,
+    "maxLogFileSize": "10MB"
+  },
+  "mcp": {
+    "allowed": []
+  },
+  "project": {
+    "name": "Quithor-DDD-MVC-Core",
+    "version": "1.1.1",
+    "description": "MVC-DDD-的spring快速开发框架"
+  },
+  "memory": {
+    "enable": true,
+    "maxEntries": 100
+  },
+  "context": {
+    "maxFileCount": 20,
+    "maxFileSize": "5MB",
+    "includePatterns": [
+      "**/*.java",
+      "**/*.md",
+      "**/*.yaml",
+      "**/*.yml",
+      "**/*.xml",
+      "**/*.properties",
+      "**/*.sql"
+    ],
+    "excludePatterns": [
+      "**/target/**",
+      "**/.git/**",
+      ".qwen/logs/**"
+    ]
+  },
+  "$version": 2
+}
