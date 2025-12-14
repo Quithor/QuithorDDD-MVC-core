@@ -81,3 +81,6 @@
 **问题**: `BaseRepository`接口方法命名和设计可能需要按DDD最佳实践调整。
 **影响**: 长期使用的可维护性和一致性。
 **修复方案**: 根据DDD仓储模式最佳实践优化接口设计。
+
+> 已完成
+> 已优化 BaseRepository 接口设计，使用更具领域语义的方法名，如 add、remove、find 等，并在 CommonRepository 中实现所有方法

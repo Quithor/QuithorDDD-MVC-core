@@ -12,12 +12,13 @@ import top.yanquithor.framework.dddbase.common.infrastructure.persistence.mapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Common Repository Implementation
  *
  * @author YanQuithor
- * @version 1.1.1.13
+ * @version 1.1.1.18
  * @since 2025-12-13
  */
 @Slf4j
@@ -32,8 +33,8 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
     }
 
     @Override
-    public DOMAIN save(DOMAIN domain) {
-        // 将领域对象转换为数据对象并保存到数据库
+    public DOMAIN add(DOMAIN domain) {
+        // 添加领域对象到仓储
         DO aDo = converter.toDO(domain);
         int i = mapper.insert(aDo);
         if (i < 1) {
@@ -43,19 +44,6 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
         }
         log.debug("insert {} to database", JSON.toJSONString(aDo));
         return converter.toDomain(aDo);
-    }
-
-    @Override
-    public Long count(DOMAIN domain) {
-        // 计算领域对象的数量
-        if (domain == null) {
-            log.debug("count all");
-            return mapper.selectCount(new LambdaQueryWrapper<DO>());
-        } else {
-            log.debug("count query: {}", JSON.toJSONString(domain));
-            return mapper.selectCount(new LambdaQueryWrapper<DO>()
-                    .setEntity(converter.toDO(domain)));
-        }
     }
 
     @Override
@@ -72,8 +60,8 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
     }
 
     @Override
-    public DOMAIN delete(DOMAIN domain) {
-        // 软删除领域对象（标记为'已删除'）
+    public DOMAIN remove(DOMAIN domain) {
+        // 从仓储中移除领域对象（软删除）
         if (domain != null) {
             LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
             wrapper.set(DO::getStatus, "deleted");
@@ -85,8 +73,8 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
     }
 
     @Override
-    public void hardDelete(DOMAIN domain) {
-        // 硬删除领域对象（从数据库中物理删除）
+    public void removePermanently(DOMAIN domain) {
+        // 从仓储中永久删除领域对象（硬删除）
         if (domain != null) {
             DO doDelete = converter.toDO(domain);
             mapper.deleteById(doDelete.getId());
@@ -96,8 +84,36 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
     }
 
     @Override
+    public Optional<DOMAIN> findById(long id) {
+        // 根据ID查找领域对象
+        DOMAIN domain = converter.toDomain(mapper.selectById(id));
+        return Optional.ofNullable(domain);
+    }
+
+    @Override
     public DOMAIN getById(long id) {
         // 根据ID获取领域对象
         return converter.toDomain(mapper.selectById(id));
+    }
+
+    @Override
+    public List<DOMAIN> findAll() {
+        // 查找所有领域对象
+        List<DO> allDataObjects = mapper.selectList(new LambdaQueryWrapper<>());
+        return allDataObjects.stream()
+                .map(converter::toDomain)
+                .toList();
+    }
+
+    @Override
+    public boolean exists(long id) {
+        // 检查具有给定ID的领域对象是否存在
+        return mapper.selectById(id) != null;
+    }
+
+    @Override
+    public Long count() {
+        // 计算仓储中的领域对象数量
+        return mapper.selectCount(new LambdaQueryWrapper<>());
     }
 }
