@@ -1,6 +1,7 @@
 package top.yanquithor.framework.dddbase.common.domain.model;
 
 import top.yanquithor.framework.dddbase.common.domain.event.DomainEvent;
+import top.yanquithor.framework.dddbase.common.domain.validation.ValidationResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Abstract Aggregate Base Class
  *
  * @author YanQuithor
- * @version 1.1.1
+ * @version 1.1.1.15
  * @since 2025-12-13
  */
 public abstract class AbstractAggregate implements Aggregate {
@@ -26,6 +27,13 @@ public abstract class AbstractAggregate implements Aggregate {
     public void clearDomainEvents() {
         // 清空领域事件列表
         domainEvents.clear();
+    }
+
+    @Override
+    public ValidationResult validate() {
+        // 默认实现：返回成功验证结果
+        // 子类可根据需要重写此方法实现具体业务验证逻辑
+        return ValidationResult.success();
     }
 
     protected void addDomainEvent(DomainEvent event) {

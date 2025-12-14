@@ -56,6 +56,9 @@
 **影响**: 代码重复，维护困难，领域不变量难以保证。
 **修复方案**: 提供验证接口和默认实现，便于在领域对象中集成验证逻辑。
 
+> 已完成
+> 已创建 Validator、ValidationResult、ValidationSupport 等验证基础设施，并将验证能力集成到 Aggregate 接口和 AbstractAggregate 基类中
+
 ## 低优先级问题（框架优化）
 
 ### 8. 测试支持不足
