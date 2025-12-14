@@ -74,6 +74,9 @@
 **影响**: 各实现可能不一致，缺少统一的聚合操作接口。
 **修复方案**: 添加聚合基础标识和元数据相关方法。
 
+> 已完成
+> 已在 Aggregate 接口中添加 getId()、getVersion()、setVersion() 等标识方法，并在 AbstractAggregate 中提供基础实现
+
 ### 10. Repository接口设计优化
 **问题**: `BaseRepository`接口方法命名和设计可能需要按DDD最佳实践调整。
 **影响**: 长期使用的可维护性和一致性。

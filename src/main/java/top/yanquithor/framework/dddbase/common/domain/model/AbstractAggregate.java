@@ -10,12 +10,33 @@ import java.util.List;
  * Abstract Aggregate Base Class
  *
  * @author YanQuithor
- * @version 1.1.1.15
+ * @version 1.1.1.17
  * @since 2025-12-13
  */
 public abstract class AbstractAggregate implements Aggregate {
     // 聚合的领域事件列表
     private final List<DomainEvent> domainEvents = new ArrayList<>();
+
+    // 聚合的唯一标识
+    protected Object id;
+
+    // 聚合的版本号
+    protected Long version;
+
+    @Override
+    public Object getId() {
+        return id;
+    }
+
+    @Override
+    public Long getVersion() {
+        return version;
+    }
+
+    @Override
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 
     @Override
     public List<DomainEvent> getDomainEvents() {
