@@ -10,6 +10,10 @@ import java.util.*;
 
 /**
  * CSV utility class that provides CSV file reading and object mapping functionality.
+ *
+ * @author YanQuithor
+ * @version 1.1.1
+ * @since 2025-12-13
  */
 @Slf4j
 @Component
