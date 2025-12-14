@@ -12,7 +12,7 @@ import top.yanquithor.framework.dddbase.common.infrastructure.persistence.reposi
  * Domain Service Implementation
  *
  * @author YanQuithor
- * @version 1.1.1
+ * @version 1.1.1.11
  * @since 2025-12-13
  */
 @Slf4j
@@ -20,7 +20,7 @@ public class DomainServiceImpl<DOMAIN extends Aggregate> implements DomainServic
 
     private BaseRepository<DOMAIN> repository;
 
-    public DomainServiceImpl(CommonRepository<?, DOMAIN, ? extends BaseMapperX<?>> repository) {
+    public DomainServiceImpl(BaseRepository<DOMAIN> repository) {
         this.repository = repository;
     }
 

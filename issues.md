@@ -32,6 +32,9 @@
 **影响**: 使框架难以理解和使用，增加学习成本。
 **修复方案**: 简化泛型参数以使框架更直观易用。
 
+> 已完成
+> 已简化 ApplicationService 的泛型参数，移除对 DomainServiceImpl 具体实现的依赖，改用 DomainService 接口；同时简化 DomainServiceImpl 构造函数参数类型
+
 ### 5. 数据操作一致性问题
 **问题**: `CommonRepository`中的`delete`方法只将记录标记为"deleted"，与其他CRUD操作语义不一致。
 **影响**: 可能导致使用者对删除操作产生误解。
