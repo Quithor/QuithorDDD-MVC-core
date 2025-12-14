@@ -17,7 +17,7 @@ import java.util.List;
  * Common Repository Implementation
  *
  * @author YanQuithor
- * @version 1.1.1
+ * @version 1.1.1.13
  * @since 2025-12-13
  */
 @Slf4j
@@ -73,7 +73,7 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
 
     @Override
     public DOMAIN delete(DOMAIN domain) {
-        // 删除领域对象（标记为'已删除'）
+        // 软删除领域对象（标记为'已删除'）
         if (domain != null) {
             LambdaUpdateWrapper<DO> wrapper = new LambdaUpdateWrapper<>();
             wrapper.set(DO::getStatus, "deleted");
@@ -82,6 +82,17 @@ public class CommonRepository<DO extends BaseDO, DOMAIN extends Aggregate, M ext
             throw new RuntimeException("domain is null");
         }
         return domain;
+    }
+
+    @Override
+    public void hardDelete(DOMAIN domain) {
+        // 硬删除领域对象（从数据库中物理删除）
+        if (domain != null) {
+            DO doDelete = converter.toDO(domain);
+            mapper.deleteById(doDelete.getId());
+        } else {
+            throw new RuntimeException("domain is null");
+        }
     }
 
     @Override

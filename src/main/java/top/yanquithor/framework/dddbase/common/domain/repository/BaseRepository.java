@@ -6,7 +6,7 @@ import top.yanquithor.framework.dddbase.common.domain.model.Aggregate;
  * Base Repository Interface
  *
  * @author YanQuithor
- * @version 1.1.1
+ * @version 1.1.1.13
  * @since 2025-12-13
  */
 public interface BaseRepository <DOMAIN extends Aggregate> {
@@ -19,8 +19,11 @@ public interface BaseRepository <DOMAIN extends Aggregate> {
     // 更新领域对象
     DOMAIN update(DOMAIN domain);
 
-    // 删除领域对象
+    // 软删除领域对象（标记为已删除）
     DOMAIN delete(DOMAIN domain);
+
+    // 硬删除领域对象（从数据库中物理删除）
+    void hardDelete(DOMAIN domain);
 
     // 根据ID获取领域对象
     DOMAIN getById(long id);
