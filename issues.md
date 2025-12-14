@@ -22,6 +22,9 @@
 **影响**: 无法区分不同类型的领域错误，导致错误处理混乱。
 **修复方案**: 创建全面的领域异常层次结构，为不同的错误场景提供基础异常类型。
 
+> 已完成
+> 已创建 DomainException 基类及 DomainValidationException、BusinessRuleViolationException、EntityNotFoundException、InvariantViolationException、DomainPermissionException 等子类
+
 ## 中优先级问题（重要改进）
 
 ### 4. 复杂泛型类型约束问题
