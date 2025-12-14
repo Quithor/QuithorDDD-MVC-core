@@ -7,6 +7,13 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
+/**
+ * Base Data Object
+ *
+ * @author YanQuithor
+ * @version 1.1.1
+ * @since 2025-12-13
+ */
 @Getter
 @Setter
 @Builder
@@ -14,16 +21,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class BaseDO {
-    
+
     @TableId
     private long id;
-    
+
     @TableField
     private LocalDateTime createTime;
-    
+
     @TableField
     private LocalDateTime updateTime;
-    
+
     @TableField
     private String status;
 }
