@@ -20,6 +20,8 @@ QuithorDDD-MVC-core is an intermediate framework guided by Domain-Driven Design 
 
 This framework can be built into a Maven dependency that allows for quick implementation of Spring projects. Include it in your project to leverage the DDD-guided MVC architecture and available plugins.
 
+For detailed usage instructions, please refer to the [Framework Usage Guide](./docs/USAGE.md).
+
 ## Project Structure
 
 - **Core Framework**: The main DDD-guided MVC framework
